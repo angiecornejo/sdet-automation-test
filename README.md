@@ -1,48 +1,98 @@
-# sdet-automation-test
-#### Version: 2.0
+# SDET-automation-test
+#### 
 
-### What is Expected?
-This is a code challenge to test your skills related to the development of automated tests. We use Pytest with Python, 
-and Allure for the reports, but feel free to use any framework you are familiar with, as long as you develop it using 
-Python.
+### Overview
+This repository provides an automated testing solution for a Google Shopping book search scenario, developed as part of the Swapcard SDET assessment. The framework is built with **Python**, **Pytest**, **Playwright**, and **Allure** reporting, following industry best practices for modern web automation testing.
 
-The test consists in some steps to interact with a web page and assert some conditions, generating a report with the
-test result after the execution.
+### Project Structure
+<img width="418" height="249" alt="image" src="https://github.com/user-attachments/assets/e39a5fe2-7a07-4b3a-949e-d00cec4879f6" />
 
-## Test Scenario
+## Quick Start
 
-For this test you should follow the steps:
-1. Go to [google.com](https://www.google.com).
-2. Search for "**book {BOOK_NAME}**" (e.g: The miserable, Blindness...).
-3. Select Shopping.
-4. Choose prices **High to Low**.
+### Prerequisites
+- Python **3.8+**
+- `pip` (Python package manager)
 
-![](./imgs/1.png)
+### Installation
 
-5. Define pricing up to **{AMOUNT}**. (e.g: 1000 or another real value, as currency might differ from running location).
+#### 1. Clone the repository
+```bash
+git clone https://github.com/angiecornejo/sdet-automation-test.git
+cd sdet-automation-test
+```
 
-![](./imgs/2.png)
+#### 2.Set up virtual environment
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
 
-6. From the second listed product **with rating**, confirm it has rating bigger or equal to **{RATING}**. (e.g: 4.5, 3.9)
+#### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
-![](./imgs/3.png)
+#### 4. Install Playwright browsers
+```bash
+playwright install
+```
 
-### Implementation Requirements
-1. Use data [parametrization](https://docs.pytest.org/en/stable/example/parametrize.html), instead hard coded data.
-2. If possible, use [Fixtures](https://docs.pytest.org/en/stable/how-to/fixtures.html) (or something like) to go to the
-page and perform the search (i.e. first three steps).
+### Running Tests
+_Basic Test Execution_
+```bash
+# Run all tests in headed mode 
+pytest
+```
+```bash
+# Run specific test file
+pytest tests/test_bookSearch.py
+```
+```bash
+# Run in headless mode
+pytest --headless
+```
 
-## Repository
-You will need to fork the repository and build the solution in Github publicly. Once you are finished, share your
-repository with us. 
+The report is generated everytime the test run, to access it, you can use the following command:
+```bash
+allure serve reports
+```
 
-We expect this to be finished in one week  (in fact, some dedicated hours might be enough), but if anything happens
-and this deadline cannot be met, reach out, so we know what is happening instead of think that you are not interested
-in this position anymore. 
+### Test Scenario
+The automated test performs the following steps:
 
-## Deliverables
-* Code in a public Github repository.
-* README.md file with the notes, documentation, and instructions related to the code developed.
-* The test execution should do the above steps and generate a report with the tests results. In case of a test failure,
-it should also attach a screenshot of the current page when the test failed.
-* Have the test parametrized so we can choose if we want to run it in headless mode or not.
+1. **Navigate** to google.com
+2. **Search** for "book {BOOK_NAME}" (e.g., "book Harry Potter", "book Game of thrones")
+3. **Click** on the Shopping tab to filter results
+4. **Sort** products by price from High to Low
+5. **Set** maximum price filter to {AMOUNT} (e.g., 500, 1000)
+6. **Verify** that the second listed product with rating has a rating ≥ {RATING} (e.g., 4.5, 3.9)
+
+### Extra considerations: ⚠️ Important ⚠️
+During development, I encountered an issue with **Google Captcha** detecting automated scripts and blocking interactions. Here’s what I tried and learned:
+
+- **Fake User Agents**: In past projects, this method worked well to bypass bot detection. However, in this case, it was ineffective.
+- **Playwright Stealth**: This library modifies browser properties and behaviors to make automation appear more “human-like.”  
+  I experimented with it ([commented in `conftest.py` at line 50](./conftest.py)), and it partially worked:
+  - Captcha didn’t appear.
+  - But clicking certain buttons (like the **Shopping** tab) became impossible.
+- **Unlocker API (Bright Data)**: This paid service worked but had limited free credits for testing.
+- **CaptchaSolver**: Another paid alternative; I didn’t proceed due to cost.
+
+When manually solving the captcha, the **entire script runs flawlessly**. While automated captcha-solving solutions exist, they:
+- Often become outdated quickly (as captcha systems change frequently).
+- Can take significant time to implement.
+- Are generally discouraged unless absolutely necessary.
+
+**Environment Setup Note:**  
+To match your test results more closely, I configured my tests to:
+- Run **from the United States** (geo-location).
+- Display results **in English**.
+
+### Assignment Requirements Implemented
+* **Data Parametrization**: Test data is externalized using @pytest.mark.parametrize
+* **Fixtures**: Custom fixtures for page setup and browser configuration
+* **Page Object Model**: Clean separation of test logic and page interactions
+* **Allure Reporting**: Comprehensive test reports with steps and attachments
+* **Screenshot on Failure**: Automatic screenshot capture when tests fail
+* **Headless/Headed Mode**: Configurable browser execution mode
+* **Python + Pytest**: Core framework as requested
