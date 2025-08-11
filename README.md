@@ -76,7 +76,7 @@ During development, I encountered an issue with **Google Captcha** detecting aut
   - Captcha didn’t appear.
   - But clicking certain buttons (like the **Shopping** tab) became impossible.
 - **Unlocker API (Bright Data)**: This paid service worked but had limited free credits for testing.
-- **CaptchaSolver**: Another paid alternative; I didn’t proceed due to cost.
+- **2Captcha (Solver)**: Another paid alternative; I didn’t proceed due to cost.
 
 When manually solving the captcha, the **entire script runs flawlessly**. While automated captcha-solving solutions exist, they:
 - Often become outdated quickly (as captcha systems change frequently).
