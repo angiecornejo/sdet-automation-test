@@ -52,7 +52,7 @@ pytest tests/test_bookSearch.py
 pytest --headless
 ```
 
-The report is generated everytime the test run, to access it, you can use the following command:
+The report is generated everytime the test runs, to access it, you can use the following command:
 ```bash
 allure serve reports
 ```
@@ -96,3 +96,12 @@ To match your test results more closely, I configured my tests to:
 * **Screenshot on Failure**: Automatic screenshot capture when tests fail
 * **Headless/Headed Mode**: Configurable browser execution mode
 * **Python + Pytest**: Core framework as requested
+
+### Test Results — Allure Report
+Last but not least, here’s a screenshot of the **Allure Report** generated after manually solving the Google Captcha. 🙂
+
+<img width="1364" height="675" alt="image" src="https://github.com/user-attachments/assets/67d97876-3db5-468d-a1cd-c2c144c5ff15" />
+
+✅ **Test 1 – Pass**: The second rated book’s score is greater than 3, meeting the expected criteria.
+
+❌ **Test 2 – Fail**: The second rated book’s score is lower than 5, which does not meet the expected criteria.
